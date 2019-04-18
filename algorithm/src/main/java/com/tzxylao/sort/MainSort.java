@@ -1,7 +1,9 @@
 package com.tzxylao.sort;
 
 import java.lang.reflect.Proxy;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -133,9 +135,9 @@ public class MainSort extends BaseSort {
         for (int i = 0; i < sums.length; i++) {
             if (l >= lefts.length) {
                 sums[i] = rights[r++];
-            }else if(r >= rights.length){
+            } else if (r >= rights.length) {
                 sums[i] = lefts[l++];
-            }else if (lefts[l] <= rights[r]) {
+            } else if (lefts[l] <= rights[r]) {
                 sums[i] = lefts[l++];
             } else {
                 sums[i] = rights[r++];
@@ -150,28 +152,23 @@ public class MainSort extends BaseSort {
         for (int i = 0; i < length; i++) {
             //堆化
             int i1 = (length - i - 2) / 2;
-            ajustHeap(nums, i1,length-i);
-            swap(nums,0,length-i-1);
+            ajustHeap(nums, i1, length - i);
+            swap(nums, 0, length - i - 1);
         }
         return nums;
     }
 
-    @Override
-    public int[] shellSort(int[] nums) {
-        return new int[0];
-    }
-
     private void ajustHeap(int[] nums, int i, int length) {
-        int left = i*2+1;
-        int right = left+1;
+        int left = i * 2 + 1;
+        int right = left + 1;
         //左右子节点最大值
         int max;
-        if(right < length){
+        if (right < length) {
             max = nums[left] > nums[right] ? left : right;
-        }else{
+        } else {
             max = left;
         }
-        if(nums[max] > nums[i]){
+        if (nums[max] > nums[i]) {
             swap(nums, max, i);
         }
         if (left == 1) {
@@ -181,12 +178,130 @@ public class MainSort extends BaseSort {
         ajustHeap(nums, i, length);
     }
 
+    @Override
+    public int[] shellSort(int[] nums) {
+        int length = nums.length;
+        int half = length / 2;
+        while (half > 0) {
+            for (int i = half; i < length; i++) {
+                if (nums[i - half] > nums[i]) {
+                    swap(nums, i - half, i);
+                }
+            }
+
+            half = half / 2;
+        }
+        return nums;
+    }
+
+    /**
+     * 计数排序
+     */
+    @Override
+    public int[] countingSort(int[] nums, int range) {
+        int[] temps = new int[range];
+        for (int i = 0; i < nums.length; i++) {
+            temps[nums[i]]++;
+        }
+        int count = 0;
+        for (int i = 0; i < temps.length; i++) {
+            for (int j = 0; j < temps[i]; j++) {
+                nums[count++] = i;
+            }
+        }
+        return nums;
+    }
+
+    /**
+     * 基数排序
+     */
+    @Override
+    public int[] radixSort(int[] nums) {
+        List<List<Integer>> temps = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            temps.add(new ArrayList<Integer>());
+        }
+        int depth = 1;
+        for (int k = 0; k < depth; k++) {
+            for (int i = 0; i < nums.length; i++) {
+                if (nums[i] > Math.pow(10, depth)) {
+                    depth++;
+                }
+                int num = (int) (nums[i] / Math.pow(10, k));
+                //先取末尾数排序
+                int remainder = num % 10;
+                temps.get(remainder).add(nums[i]);
+            }
+            int count = 0;
+            for (int i = 0; i < temps.size(); i++) {
+                List<Integer> integers = temps.get(i);
+                for (Integer j : integers) {
+                    nums[count++] = j;
+                }
+            }
+            for (List<Integer> temp : temps) {
+                temp.clear();
+            }
+        }
+        return nums;
+    }
+
+    /**
+     * 二叉树排序
+     */
+    @Override
+    public int[] binaryTreeSort(int[] nums) {
+        Node node = new Node();
+        node.val = nums[0];
+        //树化
+        for (int i = 1; i < nums.length; i++) {
+            distNode(node, nums[i]);
+        }
+        //中序遍历
+        return iterTree(node);
+    }
+
+    private List<Integer> result = new ArrayList<>();
+    private int[] iterTree(Node node) {
+        if (node != null) {
+            iterTree(node.left);
+            result.add(node.val);
+            iterTree(node.right);
+
+        }
+        return result.stream().mapToInt(Integer::valueOf).toArray();
+    }
+
+    private void distNode(Node node, int val) {
+        if (val < node.val) {
+            if (node.left == null) {
+                node.left = new Node();
+                node.left.val = val;
+            } else {
+                distNode(node.left, val);
+            }
+        } else {
+            if (node.right == null) {
+                node.right = new Node();
+                node.right.val = val;
+            } else {
+                distNode(node.right, val);
+            }
+        }
+    }
+
+    class Node {
+        Node left;
+        Node right;
+        int val;
+    }
+
     public static void main(String[] args) {
         //随机数的个数
-//        int range = 100;
-        int range = 10;
+        int range = 100;
+//        int range = 10;
         MainSort s = new MainSort();
-        //是否打印结构
+        //是否打印结果
         s.showResult(true);
         ISort sort = (ISort) Proxy.newProxyInstance(s.getClass().getClassLoader(), new Class[]{ISort.class}, new SortHandler(s));
         //选择排序
@@ -212,6 +327,22 @@ public class MainSort extends BaseSort {
         //堆排序
         nums = getRandomVal(range);
         sort.heapSort(nums);
+
+        //希尔排序
+        nums = getRandomVal(range);
+        sort.shellSort(nums);
+
+        //计数排序
+        nums = getRandomVal(range);
+        sort.countingSort(nums, range);
+
+        //基数排序
+        nums = getRandomVal(range);
+        sort.radixSort(nums);
+
+        //二叉树排序
+        nums = getRandomVal(range);
+        sort.binaryTreeSort(nums);
     }
 
 

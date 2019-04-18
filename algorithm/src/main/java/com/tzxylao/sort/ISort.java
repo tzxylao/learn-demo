@@ -17,6 +17,7 @@ public interface ISort {
 
     /**
      * 返回是否打印排序结果
+     *
      * @return
      */
     boolean isShowResult();
@@ -56,4 +57,18 @@ public interface ISort {
      */
     int[] shellSort(int[] nums);
 
+    /**
+     * 计数排序
+     */
+    int[] countingSort(int[] nums, int range);
+
+    /**
+     * 基数排序
+     */
+    int[] radixSort(int[] nums);
+
+    /**
+     * 二叉树排序
+     */
+    int[] binaryTreeSort(int[] nums);
 }

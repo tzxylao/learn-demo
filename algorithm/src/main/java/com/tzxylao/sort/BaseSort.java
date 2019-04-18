@@ -39,4 +39,5 @@ public abstract class BaseSort implements ISort {
         nums[i] = nums[j];
         nums[j] = temp;
     }
+
 }
