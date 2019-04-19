@@ -2,9 +2,9 @@ package com.tzxylao.dubbo;
 
 import com.tzxylao.dubbo.service.GreetingService;
 import org.apache.dubbo.config.annotation.Reference;
-import org.springframework.boot.ApplicationRunner;
-import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;
 
 import java.util.concurrent.TimeUnit;
@@ -16,7 +16,7 @@ public class DubboConsumerApplication {
 	private GreetingService greetingService;
 
 	public static void main(String[] args) throws InterruptedException {
-		SpringApplication.run(DubboConsumerApplication.class, args);
+		new SpringApplicationBuilder(DubboConsumerApplication.class).web(WebApplicationType.NONE).run(args);
 		/*ReferenceConfig<GreetingService> ref erenceConfig = new ReferenceConfig<>();
 		referenceConfig.setApplication(new ApplicationConfig("first-dubbo-consumer"));
 		referenceConfig.setRegistry(new RegistryConfig("zookeeper://i.tzxylao.com:2181"));
@@ -30,8 +30,7 @@ public class DubboConsumerApplication {
 	}
 
 	@Bean
-	public ApplicationRunner runner(){
-		int count = 0;
+	public void runner(){
 		while (true) {
 			System.out.println(greetingService.sayHello("World "));
 			try {
@@ -39,14 +38,7 @@ public class DubboConsumerApplication {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			count++;
-			if (count == 100) {
-				break;
-			}
 		}
-		return s -> {
-			System.out.println(greetingService.sayHello("World "));
-		};
 	}
 
 }

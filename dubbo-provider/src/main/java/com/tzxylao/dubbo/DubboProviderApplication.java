@@ -1,14 +1,15 @@
 package com.tzxylao.dubbo;
 
-import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 
 @EnableAutoConfiguration
-public class DubboApplication {
+public class DubboProviderApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DubboApplication.class, args);
-		/*ServiceConfig<GreetingService> serviceConfig = new ServiceConfig<>();
+        new SpringApplicationBuilder(DubboProviderApplication.class).web(WebApplicationType.NONE).run(args);
+        /*ServiceConfig<GreetingService> serviceConfig = new ServiceConfig<>();
 		serviceConfig.setApplication(new ApplicationConfig("first-dubbo-provider"));
 		serviceConfig.setRegistry(new RegistryConfig("zookeeper://i.tzxylao.com:2181"));
 		serviceConfig.setInterface(GreetingService.class);
