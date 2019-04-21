@@ -1,7 +1,5 @@
 package com.tzxylao.design.starter;
 
-import com.shouhuda.websocket.PersonService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -10,10 +8,10 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class MyStarterApp {
-    @Autowired
-    private PersonService personService;
-
-    public void sayHello() {
-        personService.sayHello();
-    }
+//    @Autowired
+//    private PersonService personService;
+//
+//    public void sayHello() {
+//        personService.sayHello();
+//    }
 }
