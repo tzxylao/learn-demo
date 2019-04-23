@@ -1,0 +1,20 @@
+zuul:
+  prefix: /api
+  routes:
+    eureka-server:
+      path: /server/**
+      url: http://localhost:8081
+    eureka-client:
+      path: /client/**
+#      url: http://localhost:8070
+      serviceId: EUREKA-CLIENT
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8080/eureka
+    register-with-eureka: false
+  instance:
+    hostname: localhost
+server:
+  port: 8060
+
