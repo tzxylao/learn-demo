@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: hystrix-client
+server:
+  port: 7020
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8080/eureka
+  instance:
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
+feign:
+  hystrix:
+    enabled: true
+  httpclient:
+    connection-timeout: 3000

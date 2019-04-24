@@ -17,6 +17,7 @@
         <module>feign</module>
         <module>eureka-all</module>
         <module>springboot</module>
+        <module>hystrix</module>
     </modules>
 
     <properties>
