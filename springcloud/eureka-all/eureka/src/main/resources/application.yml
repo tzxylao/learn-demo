@@ -11,5 +11,6 @@ eureka:
   server:
     wait-time-in-ms-when-sync-empty: 0
     enable-self-preservation: false
-
+server:
+  port: 8761
 
