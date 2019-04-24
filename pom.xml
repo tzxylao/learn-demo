@@ -5,7 +5,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>algorithm</module>
-        <module>eureka-all</module>
+        <module>springcloud</module>
     </modules>
     <parent>
 		<groupId>org.springframework.boot</groupId>
