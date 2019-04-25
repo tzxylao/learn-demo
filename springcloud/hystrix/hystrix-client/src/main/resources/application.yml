@@ -9,7 +9,7 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
     service-url:
-      defaultZone: http://localhost:8080/eureka
+      defaultZone: http://localhost:8761/eureka
   instance:
     instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
 feign:
@@ -17,3 +17,6 @@ feign:
     enabled: true
   httpclient:
     connection-timeout: 3000
+
+conditional:
+  enabled: true
