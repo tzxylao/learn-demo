@@ -25,7 +25,9 @@ public class StreamDemo5 {
 
         //使用自己的线程池，不使用默认线程池，防止任务被阻塞
         ForkJoinPool pool = new ForkJoinPool(3);
-        pool.submit(() -> IntStream.range(1,100).parallel().peek(StreamDemo5::debug).count());
+//        pool.submit(() -> IntStream.range(1,100).parallel().peek(StreamDemo5::debug).count());
+        IntStream.range(1,100).parallel().peek(StreamDemo5::debug).count();
+        System.out.println("哈哈哈");
         pool.shutdown();
 
         synchronized (pool) {
