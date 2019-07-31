@@ -15,10 +15,44 @@ public class Solution {
 //        testReverse();
 
         //字符串转整数
-        testAtoi();
+//        testAtoi();
 
         //回文整数
-        testPalindrome();
+//        testPalindrome();
+
+        //算最大面积 https://leetcode-cn.com/problems/container-with-most-water/
+        Solution solution = new Solution();
+        int[] height = {1,8,6,2,5,4,8,3,7};
+        System.out.println(solution.maxArea(height));
+
+    }
+
+    private int area;
+
+    public int maxArea(int[] height) {
+        int length = height.length - 1;
+        compare(height, 0, length);
+        return area;
+    }
+
+    private void compare(int[] height, int left, int right) {
+        if (left >= right) {
+            return;
+        }
+        int leftVal = height[left];
+        int rightVal = height[right];
+        int temp;
+        if (leftVal > rightVal) {
+            temp = rightVal*(right-left);
+            right--;
+        }else{
+            temp = leftVal*(right-left);
+            left++;
+        }
+        if (temp > area) {
+            area = temp;
+        }
+        compare(height, left, right);
     }
 
     private static void testPalindrome() {
