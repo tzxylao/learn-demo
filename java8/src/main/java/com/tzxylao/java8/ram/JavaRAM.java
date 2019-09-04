@@ -3,9 +3,12 @@ package com.tzxylao.java8.ram;
 import org.apache.lucene.util.RamUsageEstimator;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -17,6 +20,17 @@ public class JavaRAM {
 
 
     public static void main(String[] args) throws UnsupportedEncodingException {
+//        test1();
+
+        Map<String, BigDecimal> map = new HashMap<>();
+        for (int i = 0; i < 3; i++) {
+            map.put("RJ2019011470498051242", new BigDecimal("10000"));
+        }
+        System.out.println(RamUsageEstimator.shallowSizeOf(map));
+        System.out.println(RamUsageEstimator.humanSizeOf(map));
+    }
+
+    private static void test1() throws UnsupportedEncodingException {
         List<Integer> i = new ArrayList<>(5);
         i.add(1);
         i.add(2);
@@ -59,6 +73,5 @@ public class JavaRAM {
         System.out.println(RamUsageEstimator.humanSizeOf(s));
         System.out.println(RamUsageEstimator.shallowSizeOf(s));
         System.out.println(RamUsageEstimator.sizeOf(s));
-
     }
 }

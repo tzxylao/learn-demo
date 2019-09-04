@@ -35,5 +35,13 @@ public class StreamDemo2 {
         for (Integer integer : collect) {
             System.out.print(integer+" ");
         }
+        List<String> strings = Arrays.asList("hello", "wolrd", "java8");
+        String collect1 = strings.stream().collect(Collectors.joining(","));
+        System.out.println(collect1);
+
+        long count = Arrays.stream(new String[]{"12","2","3"})
+                .mapToInt(String::length)
+                .sum();
+        System.out.println(count);
     }
 }
