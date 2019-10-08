@@ -1,9 +1,9 @@
 package com.tzxylao.java8.ram;
 
+import com.alibaba.fastjson.JSON;
 import org.apache.lucene.util.RamUsageEstimator;
 
 import java.io.UnsupportedEncodingException;
-import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,13 +21,23 @@ public class JavaRAM {
 
     public static void main(String[] args) throws UnsupportedEncodingException {
 //        test1();
-
-        Map<String, BigDecimal> map = new HashMap<>();
-        for (int i = 0; i < 3; i++) {
-            map.put("RJ2019011470498051242", new BigDecimal("10000"));
+        List<String> list = new ArrayList<>();
+        Map<String, Integer> map = new HashMap<>();
+        for (int j = 0; j < 3; j++) {
+            list.add(j + "");
         }
-        System.out.println(RamUsageEstimator.shallowSizeOf(map));
-        System.out.println(RamUsageEstimator.humanSizeOf(map));
+        for (int j = 0; j < 3; j++) {
+            list.add(j + "");
+        }
+        list.forEach(key -> map.merge(key,Integer.valueOf(key),Integer::sum));
+        System.out.println(JSON.toJSONString(map));
+
+//        Map<String, BigDecimal> map = new HashMap<>();
+//        for (int i = 0; i < 3; i++) {
+//            map.put("RJ2019011470498051242", new BigDecimal("10000"));
+//        }
+//        System.out.println(RamUsageEstimator.shallowSizeOf(map));
+//        System.out.println(RamUsageEstimator.humanSizeOf(map));
     }
 
     private static void test1() throws UnsupportedEncodingException {
@@ -35,6 +45,7 @@ public class JavaRAM {
         i.add(1);
         i.add(2);
         i.add(3);
+
         System.out.println(RamUsageEstimator.shallowSizeOf(i));
         System.out.println(RamUsageEstimator.humanSizeOf(i));
         String strA = "abc";
