@@ -16,9 +16,9 @@ public class ThreadPractice {
         poolExecutor.submit(new MyThread());
         poolExecutor.submit(new MyThread());
         poolExecutor.submit(new MyThread());
-//        poolExecutor.shutdown();
+        poolExecutor.shutdown();
         poolExecutor.shutdownNow();
-        try {
+        /*try {
             while(true){
                 boolean b = poolExecutor.awaitTermination(1, TimeUnit.MILLISECONDS);
                 System.out.println(b);
@@ -29,7 +29,7 @@ public class ThreadPractice {
 
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     public static void main(String[] args) {
