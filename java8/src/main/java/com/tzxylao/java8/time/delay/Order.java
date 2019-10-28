@@ -12,6 +12,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 public class Order {
+
     private Long id;
 
     private Date createDate;

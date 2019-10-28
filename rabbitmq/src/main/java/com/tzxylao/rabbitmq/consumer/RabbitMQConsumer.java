@@ -2,7 +2,6 @@ package com.tzxylao.rabbitmq.consumer;
 
 import org.springframework.amqp.core.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
@@ -10,7 +9,7 @@ import javax.annotation.PostConstruct;
  * @author laoliangliang
  * @date 2019/8/5 9:54
  */
-@Component
+//@Component
 public class RabbitMQConsumer {
 
     @Autowired
