@@ -73,13 +73,53 @@ public class MainSort extends BaseSort {
         return nums;
     }
 
+
     /**
      * 快速排序
      */
     @Override
     public int[] quickSort(int[] nums) {
-        qSort(nums, 0, nums.length - 1);
+        qSort2(nums, 0, nums.length - 1);
         return nums;
+    }
+
+    /**
+     * 从大到小
+     * @param nums
+     * @param l
+     * @param r
+     */
+    public void qSort2(int[] nums, int l, int r) {
+        int p = nums[l];
+        int left = l;
+        int right = r;
+        if (left == right) {
+            return;
+        }
+        while (left < right) {
+            while (left < right) {
+                if (nums[left] < p) {
+                    break;
+                }
+                left++;
+            }
+
+            while (left < right) {
+                if (nums[right] > p) {
+                    break;
+                }
+                right--;
+            }
+
+            if (left < right) {
+                swap(nums, left, right);
+            }
+        }
+        if (nums[right] > p) {
+            swap(nums, right, l);
+        }
+        qSort2(nums, l, right - 1);
+        qSort2(nums, right, r);
     }
 
     private void qSort(int[] nums, int l, int r) {
@@ -262,6 +302,7 @@ public class MainSort extends BaseSort {
     }
 
     private List<Integer> result = new ArrayList<>();
+
     private int[] iterTree(Node node) {
         if (node != null) {
             iterTree(node.left);
@@ -318,6 +359,7 @@ public class MainSort extends BaseSort {
 
         //快速排序
         nums = getRandomVal(range);
+//        nums = new int[]{9, 8, 7, 6, 5};
         sort.quickSort(nums);
 
         //归并排序
