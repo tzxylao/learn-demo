@@ -85,6 +85,7 @@ public class MainSort extends BaseSort {
 
     /**
      * 从大到小
+     *
      * @param nums
      * @param l
      * @param r
@@ -189,13 +190,58 @@ public class MainSort extends BaseSort {
     @Override
     public int[] heapSort(int[] nums) {
         int length = nums.length;
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < length-1; i++) {
             //堆化
             int i1 = (length - i - 2) / 2;
             ajustHeap(nums, i1, length - i);
             swap(nums, 0, length - i - 1);
         }
         return nums;
+    }
+
+
+    /**
+     * 从大到小堆排序
+     *
+     * @param nums
+     * @return
+     */
+    @Override
+    public int[] heap2Sort(int[] nums) {
+        for (int i = 0; i < nums.length; i++) {
+            // 建堆找出最小值
+            maxHeapify(nums, nums.length - i);
+            swap(nums, 0, nums.length - i - 1);
+        }
+        return nums;
+    }
+
+    private void maxHeapify(int[] nums, int length) {
+        for (int i = nums.length-1; i >= 0 ; i--) {
+            heapify(nums, i, length);
+        }
+    }
+
+    private void heapify(int[] nums, int i, int length) {
+        if (i < length) {
+            int left = i*2+1;
+            int right = left+1;
+            int min = i;
+            if(left < length){
+                if (nums[left] < nums[min]) {
+                    min = left;
+                }
+            }
+            if (right < length) {
+                if (nums[right] < nums[min]) {
+                    min = right;
+                }
+            }
+            if (min != i) {
+                swap(nums, min, i);
+                heapify(nums, min, length);
+            }
+        }
     }
 
     private void ajustHeap(int[] nums, int i, int length) {
@@ -344,7 +390,8 @@ public class MainSort extends BaseSort {
         MainSort s = new MainSort();
         //是否打印结果
         s.showResult(true);
-        ISort sort = (ISort) Proxy.newProxyInstance(s.getClass().getClassLoader(), new Class[]{ISort.class}, new SortHandler(s));
+        ISort sort = (ISort) Proxy.newProxyInstance(s.getClass().getClassLoader(), new Class[]{ISort.class},
+                new SortHandler(s));
         //选择排序
         int[] nums = getRandomVal(range);
         sort.selectSort(nums);
@@ -366,9 +413,13 @@ public class MainSort extends BaseSort {
         nums = getRandomVal(range);
         sort.mergerSort(nums);
 
-        //堆排序
+        //堆排序 小到大
         nums = getRandomVal(range);
         sort.heapSort(nums);
+
+        //堆排序 大到小
+        nums = getRandomVal(range);
+        sort.heap2Sort(nums);
 
         //希尔排序
         nums = getRandomVal(range);

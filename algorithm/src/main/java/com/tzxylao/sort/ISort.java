@@ -53,6 +53,11 @@ public interface ISort {
     int[] heapSort(int[] nums);
 
     /**
+     * 堆排序 大到小
+     */
+    int[] heap2Sort(int[] nums);
+
+    /**
      * 希尔排序
      */
     int[] shellSort(int[] nums);
